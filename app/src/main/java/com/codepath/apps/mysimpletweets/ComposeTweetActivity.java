@@ -1,5 +1,6 @@
 package com.codepath.apps.mysimpletweets;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -16,6 +17,8 @@ import org.json.JSONObject;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import com.codepath.apps.mysimpletweets.R;
+
+import static android.widget.Toast.LENGTH_LONG;
 
 public class ComposeTweetActivity extends AppCompatActivity {
 
@@ -43,6 +46,7 @@ public class ComposeTweetActivity extends AppCompatActivity {
                 new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        Toast.makeText(getApplicationContext(), "Tweet Successful!", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
