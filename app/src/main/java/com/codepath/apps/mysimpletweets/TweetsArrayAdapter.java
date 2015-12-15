@@ -36,10 +36,13 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         TextView tvUserName = (TextView) convertView.findViewById(R.id.tvUserName);
         TextView tvBody = (TextView) convertView.findViewById(R.id.tvBody);
         TextView tvRealName = (TextView) convertView.findViewById(R.id.tvRealName);
-        tvUserName.setText(tweet.getUser().getScreenName());
-        tvBody.setText(tweet.getBody());
-        tvRealName.setText(tweet.getUser().getName());
+
         ivProfileImage.setImageResource(android.R.color.transparent); // clear out the old image for a recycled view
+
+        tvRealName.setText(tweet.getUser().getName());
+        tvUserName.setText("@" + tweet.getUser().getScreenName());
+        tvBody.setText(tweet.getBody());
+
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(ivProfileImage);
 
         return convertView;

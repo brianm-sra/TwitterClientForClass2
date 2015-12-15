@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.models.Tweet;
+import com.codepath.apps.mysimpletweets.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -27,6 +28,8 @@ public class TimelineActivity extends AppCompatActivity {
     private ArrayList<Tweet> tweets;
     private TweetsArrayAdapter aTweets;
     private ListView lvTweets;
+
+    private final int REQUEST_CODE = 20;
 
 
     @Override
@@ -97,6 +100,35 @@ public class TimelineActivity extends AppCompatActivity {
     public void onComposeAction(MenuItem item) {
 
         Intent composeTweetIntent = new Intent(this, ComposeTweetActivity.class);
-        startActivity(composeTweetIntent);
+        // startActivity(composeTweetIntent);
+        startActivityForResult(composeTweetIntent, REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            Bundle extras = data.getExtras();
+            Tweet newTweet = new Tweet();
+            newTweet.setUid(extras.getLong("tweetId"));
+            newTweet.setBody(extras.getString("tweet"));
+
+            User currentUser = new User();
+            currentUser.setName(extras.getString("userName"));
+            currentUser.setScreenName(extras.getString("userScreenName"));
+            currentUser.setUid(extras.getLong("userId"));
+            newTweet.setUser(currentUser);
+
+            tweets.add(0, newTweet);
+            /*
+                                        data.putExtra("userName", user.getName());
+                            data.putExtra("userScreenName", user.getScreenName());
+                            data.putExtra("userId", user.getUid());
+                        }
+
+
+                        data.putExtra("tweet", tweetStr);
+
+             */
+        }
     }
 }
